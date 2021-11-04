@@ -1,11 +1,20 @@
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { BrowserRouter as Router, Route} from "react-router-dom"
+import { Provider } from "react-redux"
+import store from "./redux/store"
+
+import Pokemon from './components/Pokemon'
+import PokemonList from './components/PokemonList'
 
 function App() {
   return (
-    <Router>
-    <div className="App">
-    </div>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <div className="App">
+          <Route exact path ="/" component={PokemonList}></Route>
+          <Route exact path ="/:idPokemon" component={Pokemon}></Route>
+        </div>
+      </Router>
+    </Provider>
   );
 }
 
