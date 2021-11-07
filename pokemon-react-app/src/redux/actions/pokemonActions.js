@@ -1,4 +1,4 @@
-import { SET_POKEMONS } from '../types'
+import { SET_POKEMONS, SET_POKEMON} from '../types'
 
 export function fetchGenIPokemons() {
     fetch('https://pokeapi.co/api/v2/pokemon?offset=0&limit=160')
@@ -31,5 +31,12 @@ export const setPokemons = (pokemons) => {
     return {
         type: SET_POKEMONS,
         payload: pokemons
+    }
+}
+
+export const setPokemon = (pokemon) => {
+    return {
+        type: SET_POKEMON,
+        payload: pokemon
     }
 }

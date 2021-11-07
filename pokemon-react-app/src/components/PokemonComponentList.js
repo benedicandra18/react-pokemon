@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import {useSelector} from 'react-redux'
 
 function PokemonComponentList() {
@@ -6,6 +7,7 @@ function PokemonComponentList() {
     const renderList = pokemons.map((pokemon)=>{
         return (
             <div className="four column wide" key={pokemon.id}>
+                <Link to={`/${pokemon.id}`}>
                 <div className="ui link cards">
                     <div className="card">
                         <div className="image">
@@ -16,6 +18,7 @@ function PokemonComponentList() {
                         </div>
                     </div>
                 </div>
+                </Link>
                 
             </div>
         )
