@@ -4,5 +4,5 @@ import pokemonReducer from "./pokemonReducer"
 
 export default combineReducers({
     pokemons: pokemonListReducer,
-    pokemon: pokemonReducer
+    pokemon: pokemonReducer,
 })

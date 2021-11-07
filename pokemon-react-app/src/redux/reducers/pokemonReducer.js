@@ -1,21 +1,15 @@
-import { GET_POKEMON, POKEMON_LOADING } from "../types";
+import { SET_POKEMON } from "../types";
 
 const initialState = {
   pokemon: {},
-  loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case GET_POKEMON:
+    case SET_POKEMON:
       return {
         ...state,
         pokemon: action.payload
-      };
-    case POKEMON_LOADING:
-      return {
-        ...state,
-        loading: true
       };
     default:
       return state;
