@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 import { setPokemons } from '../redux/actions/pokemonActions'
 import PokemonComponentList from './PokemonComponentList'
+import { Container } from '../styles/Container.style'
 
 function PokemonList() {
     const pokemons = useSelector(state => state.pokemons.pokemons)
@@ -31,7 +32,9 @@ function PokemonList() {
 
     return (
         <div>
+            <Container>
             <PokemonComponentList></PokemonComponentList>
+            </Container>
         </div>
     )
 }

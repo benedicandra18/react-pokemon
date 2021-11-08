@@ -1,33 +1,27 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux'
+import { Card } from '../styles/Card.style'
+import { Img} from '../styles/Img.style'
+import { CardLabel } from '../styles/CardLabel.style'
 
 function PokemonComponentList() {
     const pokemons = useSelector(state => state.pokemons.pokemons)
-    const renderList = pokemons.map((pokemon)=>{
+    const renderList = pokemons.map((pokemon) => {
         return (
-            <div className="four column wide" key={pokemon.id}>
+            <Card key={pokemon.id}>
                 <Link to={`/${pokemon.id}`}>
-                <div className="ui link cards">
-                    <div className="card">
-                        <div className="image">
-                            <img src={pokemon.sprites.front_default}></img>
-                        </div>
-                        <div className="content">
-                            <div className="header">{pokemon.name}</div>
-                        </div>
-                    </div>
-                </div>
+                    <Img src={pokemon.sprites.front_default}></Img>
                 </Link>
-                
-            </div>
+                <CardLabel>{pokemon.name}</CardLabel>
+            </Card>
         )
     })
 
-    return(
+    return (
         <>{renderList}</>
     )
-    
+
 }
 
 export default PokemonComponentList
