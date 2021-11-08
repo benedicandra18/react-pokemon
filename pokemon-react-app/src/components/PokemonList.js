@@ -4,6 +4,7 @@ import axios from 'axios'
 import { setPokemons } from '../redux/actions/pokemonActions'
 import PokemonComponentList from './PokemonComponentList'
 import { Container } from '../styles/Container.style'
+import InputComponent from './InputComponent'
 
 function PokemonList() {
     const pokemons = useSelector(state => state.pokemons.pokemons)
@@ -11,7 +12,7 @@ function PokemonList() {
 
     const fetchPokemons = async () => {
         const response = await axios
-            .get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=160')
+            .get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=99')
             .catch(err => console.log(err))
 
         let promises=[]
@@ -32,8 +33,10 @@ function PokemonList() {
 
     return (
         <div>
+           
             <Container>
-            <PokemonComponentList></PokemonComponentList>
+            <InputComponent/>
+                <PokemonComponentList/>
             </Container>
         </div>
     )

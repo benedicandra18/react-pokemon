@@ -1,7 +1,7 @@
-import { SET_POKEMONS, SET_POKEMON} from '../types'
+import { SET_POKEMONS, SET_POKEMON, FILTER_POKEMONS} from '../types'
 
 export function fetchGenIPokemons() {
-    fetch('https://pokeapi.co/api/v2/pokemon?offset=0&limit=160')
+    fetch('https://pokeapi.co/api/v2/pokemon?offset=0&limit=99')
         .then(res => res.json())
         .then(function (pokemons) {
             pokemons.results.forEach(function (pokemon) {
@@ -38,5 +38,12 @@ export const setPokemon = (pokemon) => {
     return {
         type: SET_POKEMON,
         payload: pokemon
+    }
+}
+
+export const filterPokemons = (filteredPokemons) => {
+    return {
+        type: FILTER_POKEMONS,
+        payload: filteredPokemons
     }
 }
