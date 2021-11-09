@@ -5,6 +5,7 @@ import { setPokemons } from '../redux/actions/pokemonActions'
 import PokemonComponentList from './PokemonComponentList'
 import { Container } from '../styles/Container.style'
 import InputComponent from './InputComponent'
+import { Body } from '../styles/Body.style'
 
 function PokemonList() {
     const pokemons = useSelector(state => state.pokemons.pokemons)
@@ -15,13 +16,13 @@ function PokemonList() {
             .get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=99')
             .catch(err => console.log(err))
 
-        let promises=[]
+        let promises = []
 
-        response.data.results.forEach((pokemon)=>{
+        response.data.results.forEach((pokemon) => {
             promises.push(axios.get(pokemon.url)
-            .then(({data})=>(data)))
-        }) 
-        const pokemons = await axios.all(promises)      
+                .then(({ data }) => (data)))
+        })
+        const pokemons = await axios.all(promises)
         dispatch(setPokemons(pokemons))
     }
 
@@ -29,14 +30,13 @@ function PokemonList() {
         fetchPokemons()
     }, [])
 
-    console.log(pokemons)
-
     return (
         <div>
-           
             <Container>
-            <InputComponent/>
-                <PokemonComponentList/>
+                <InputComponent />
+                <Container>
+                <PokemonComponentList />
+                </Container>
             </Container>
         </div>
     )

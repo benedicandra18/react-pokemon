@@ -14,9 +14,11 @@ function InputComponent() {
         setSearchName(e.target.value)
         if (e.target.value !== '') {
             const filteredPokemons = pokemons.filter((pokemon) => {
+                //return pokemon.name.substring(0,e.target.value.length)===e.target.value.toLowerCase()
                 return pokemon.name.toLowerCase().includes(e.target.value.toLowerCase())
             })
             dispatch(filterPokemons(filteredPokemons))
+
         }
         else {
             dispatch(filterPokemons(pokemons))
@@ -26,7 +28,7 @@ function InputComponent() {
     return (
         <div>
             <Input
-                placeholder="Filter pokemon"
+                placeholder="Filter pokemon..."
                 value={searchName}
                 onChange={(e) => searchHandler(e)}
             ></Input>

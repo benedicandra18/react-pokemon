@@ -2,7 +2,8 @@ import { SET_POKEMONS, POKEMONS_LOADING, FILTER_POKEMONS } from "../types";
 
 const initialState = {
   pokemons: [],
-  filteredPokemons:[]
+  filteredPokemons:[],
+  filterStatus: false
 };
 
 export default function (state = initialState, action) {
@@ -18,7 +19,8 @@ export default function (state = initialState, action) {
         // filteredPokemons: state.pokemons.filter((pokemon)=> {
         //   return pokemon.name.includes(action.payload.toLowerCase())
         // })
-        filteredPokemons: action.payload
+        filteredPokemons: action.payload,
+        filterStatus: true
       }
     default:
       return state;

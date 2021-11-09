@@ -3,38 +3,46 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Card } from '../styles/Card.style'
 import { Img } from '../styles/Img.style'
-import { CardLabel } from '../styles/CardLabel.style'
+import { Label } from '../styles/Label.style'
+import { StyledLink } from '../styles/Link.style'
+import { Container } from '../styles/Container.style'
 
 function PokemonComponentList() {
     const pokemons = useSelector(state => state.pokemons.pokemons)
     const filteredPokemons = useSelector(state => state.pokemons.filteredPokemons)
-    var renderList
-    if (filteredPokemons.length!=0 && pokemons.length!=0) {
-        renderList = filteredPokemons.map((pokemon) => {
-            return (
-                <Card key={pokemon.id}>
-                    <Link to={`/${pokemon.id}`}>
-                        <Img src={pokemon.sprites.front_default}></Img>
-                    </Link>
-                    <CardLabel>{pokemon.name}</CardLabel>
-                </Card>
-            )
-        })
-    }
-    else 
-    if(filteredPokemons.length==0 && pokemons.length!=0){
+    const filterStatus = useSelector(state => state.pokemons.filterStatus)
+    var renderList=[]
+    if(pokemons.length!=0 && filteredPokemons.length==0 && filterStatus==false){
         renderList = pokemons.map((pokemon) => {
             return (
                 <Card key={pokemon.id}>
-                    <Link to={`/${pokemon.id}`}>
+                    <StyledLink to={`/${pokemon.id}`} style={{ textDecoration: 'none' }}>
                         <Img src={pokemon.sprites.front_default}></Img>
-                    </Link>
-                    <CardLabel>{pokemon.name}</CardLabel>
+                        <Label>{pokemon.name}</Label>
+                    </StyledLink>
+                    
                 </Card>
             )
         })
     }
-
+    else
+        if (filteredPokemons.length!=0 ) {
+            renderList = filteredPokemons.map((pokemon) => {
+                return (
+                    <Card key={pokemon.id}>
+                        <Link to={`/${pokemon.id}`}>
+                            <Img src={pokemon.sprites.front_default}></Img>
+                        </Link>
+                        <Label>{pokemon.name}</Label>
+                    </Card>
+                )
+            })
+        }
+        else
+            if(filteredPokemons.length==0 && filterStatus==true){
+                renderList= (<Label>No pokemons found ...</Label>)
+            }
+      
     return (
         <>{renderList}</>
     )
