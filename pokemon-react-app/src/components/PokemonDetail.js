@@ -1,53 +1,69 @@
-import React, {useEffect} from 'react'
-import { useParams } from 'react-router'
+import React, { useEffect, useState } from 'react'
+import { useLocation, useParams } from 'react-router'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { setPokemon } from '../redux/actions/pokemonActions'
-import {Img} from './../styles/Img.style'
+import { notFoundPokemon, setPokemon } from '../redux/actions/pokemonActions'
+import { Img } from './../styles/Img.style'
 import { Container } from '../styles/Container.style'
 import { Type } from '../styles/Type.style'
 import { Label } from '../styles/Label.style'
 import { Body } from '../styles/Body.style'
+import NotFoundComponent from './NotFoundComponent'
 
-function PokemonDetail() {
-    const {idPokemon}=useParams()
-    const dispatch=useDispatch()
-    const pokemon = useSelector(state => state.pokemon.pokemon)
+const PokemonDetail = () => {
+    const { pokemonName } = useParams()
+    const dispatch = useDispatch()
+    const { pokemon, notFound } = useSelector(state => state.pokemon)
+    const pokemons = useSelector(state => state.pokemons.pokemons)
 
-    const fetchPokemonData= async()=>{
-        const response=await axios.get(`https://pokeapi.co/api/v2/pokemon/${idPokemon}`)
-            .catch(err=>console.log(err))
+    const fetchPokemonData = async () => {
+        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+            .catch(err => console.log(err))
         
-        dispatch(setPokemon(response.data))
-        console.log(response.data.types[0].type.name)
+        var names = []
+        pokemons.map(pokemon => names.push(pokemon.name))
+        if(names.includes(pokemonName)){
+            dispatch(setPokemon(response.data))
+        }
+        else{
+            dispatch(notFoundPokemon())
+        }
     }
 
-    useEffect(()=>{
-        if(idPokemon && idPokemon!=="")
+    useEffect(() => {
+        console.log("props:", pokemons)
+        if (pokemonName && pokemonName !== "")
             fetchPokemonData()
-    },[idPokemon])
+    }, [pokemonName, dispatch])
 
-    const colors=['#ed835c', '#44a8eb', '#ae44cf', '#4bc94d', '#989ced' ]
+    const colors = ['#ed835c', '#44a8eb', '#ae44cf', '#4bc94d', '#989ced']
 
     return (
-        <div>
-            <Label>{pokemon.name}</Label>
-            {/* <Container> */}
-            {/* <Img src={pokemon.sprites.back_default}></Img>
-            <Img src={pokemon.sprites.back_female}></Img>
-            <Img src={pokemon.sprites.back_shiny}></Img>
-            <Img src={pokemon.sprites.back_shiny_female}></Img>
-            <Img src={pokemon.sprites.front_default}></Img>
-            <Img src={pokemon.sprites.front_female}></Img>
-            <Img src={pokemon.sprites.front_shiny}></Img>
-            <Img src={pokemon.sprites.front_shiny_female}></Img>  */}
+        <>
+         {!notFound ? 
+            <div>
+                <Label>{pokemon.name}</Label>
+                {/* {/* <Container>
+                        <Img src={pokemon.sprites.back_default}></Img>
+                        <Img src={pokemon.sprites.back_female}></Img>
+                        <Img src={pokemon.sprites.back_shiny}></Img>
+                        <Img src={pokemon.sprites.back_shiny_female}></Img>
+                        <Img src={pokemon.sprites.front_default}></Img>
+                        <Img src={pokemon.sprites.front_female}></Img>
+                        <Img src={pokemon.sprites.front_shiny}></Img>
+                        <Img src={pokemon.sprites.front_shiny_female}></Img> 
 
-         {/* {pokemon.types.map( type =>{
+                        {/* {pokemon.types.map( type =>{
                 return <Type key={type.name} backgroundColor={colors[Math.floor(Math.random() * type.length)]}>{type.name}</Type> 
             })}  */}
-            
-            {/* </Container> */}
-        </div>
+
+                 {/* </Container>   */}
+                 </div>             
+            :
+            <NotFoundComponent /> 
+       }
+        
+        </>
     )
 }
 

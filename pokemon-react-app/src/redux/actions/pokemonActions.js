@@ -1,31 +1,4 @@
-import { SET_POKEMONS, SET_POKEMON, FILTER_POKEMONS} from '../types'
-
-export function fetchGenIPokemons() {
-    fetch('https://pokeapi.co/api/v2/pokemon?offset=0&limit=99')
-        .then(res => res.json())
-        .then(function (pokemons) {
-            pokemons.results.forEach(function (pokemon) {
-                fetchPokemonDataFromGenI(pokemon)
-            })
-        })
-}
-
-export function fetchPokemonDataFromGenI(pokemon) {
-    var species = []
-    fetch('https://pokeapi.co/api/v2/generation/1/')
-        .then(response => response.json())
-        .then(data => data.pokemon_species
-            .map(specieData => { return species.push(specieData.name) }))
-
-        .then(fetch(pokemon.url)
-            .then(res => res.json())
-            .then(data => {
-                if (species.includes(data.species.name)) {
-                    return data
-                }
-            })
-        )
-}
+import { SET_POKEMONS, SET_POKEMON, FILTER_POKEMONS, POKEMONS_LOADING, POKEMON_NOT_FOUND } from '../types'
 
 export const setPokemons = (pokemons) => {
     return {
@@ -45,5 +18,17 @@ export const filterPokemons = (filteredPokemons) => {
     return {
         type: FILTER_POKEMONS,
         payload: filteredPokemons
+    }
+}
+
+export const notFoundPokemon = () => {
+    return {
+        type: POKEMON_NOT_FOUND
+    }
+}
+
+export const setPokemonsLoading = () => {
+    return {
+        type: POKEMONS_LOADING
     }
 }

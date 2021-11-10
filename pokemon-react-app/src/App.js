@@ -9,12 +9,10 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <Body>
         <div className="App">
           <Route exact path ="/" component={PokemonList}></Route>
-          <Route exact path ="/:idPokemon" component={PokemonDetail}></Route>
+          <Route exact path ="/:pokemonName" component={PokemonDetail}></Route>
         </div>
-        </Body>
       </Router>
   
     </Provider>

@@ -1,42 +1,53 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
-import { setPokemons } from '../redux/actions/pokemonActions'
+import { setPokemons, setPokemonsLoading } from '../redux/actions/pokemonActions'
 import PokemonComponentList from './PokemonComponentList'
 import { Container } from '../styles/Container.style'
 import InputComponent from './InputComponent'
-import { Body } from '../styles/Body.style'
+import { Label } from '../styles/Label.style'
 
 function PokemonList() {
-    const pokemons = useSelector(state => state.pokemons.pokemons)
+    const { pokemons, loading } = useSelector(state => state.pokemons)
     const dispatch = useDispatch();
 
     const fetchPokemons = async () => {
-        const response = await axios
-            .get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=99')
-            .catch(err => console.log(err))
 
-        let promises = []
+        dispatch(setPokemonsLoading())
 
-        response.data.results.forEach((pokemon) => {
-            promises.push(axios.get(pokemon.url)
-                .then(({ data }) => (data)))
-        })
-        const pokemons = await axios.all(promises)
-        dispatch(setPokemons(pokemons))
+        const gen1Species = await axios.get('https://pokeapi.co/api/v2/generation/1')
+            .then(res => res.data.pokemon_species.map(specie => specie.name))
+
+        const allPokemons = await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=1118')
+            .then(res => res.data.results.map(pokemon =>
+                axios.get(pokemon.url)
+                    .then(({ data }) => (data))))
+
+        const gen1Pokemons = await axios.all(allPokemons)
+            .then(res => res.filter(res => gen1Species.includes(res.species.name)))
+
+        dispatch(setPokemons(gen1Pokemons))
     }
 
     useEffect(() => {
-        fetchPokemons()
+        if(pokemons.length===0){
+            fetchPokemons()
+        } 
     }, [])
 
     return (
         <div>
+
             <Container>
                 <InputComponent />
-                <Container>
-                <PokemonComponentList />
-                </Container>
+                {loading ?
+                    <Container>
+                        <Label>Loading ... </Label>
+                    </Container> :
+                    <Container>
+                        <PokemonComponentList />
+                    </Container>}
+
             </Container>
         </div>
     )

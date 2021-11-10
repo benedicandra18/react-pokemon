@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { Card } from '../styles/Card.style'
 import { Img } from '../styles/Img.style'
@@ -16,11 +15,10 @@ function PokemonComponentList() {
         renderList = pokemons.map((pokemon) => {
             return (
                 <Card key={pokemon.id}>
-                    <StyledLink to={`/${pokemon.id}`} style={{ textDecoration: 'none' }}>
+                    <StyledLink to={`/${pokemon.name}`} style={{ textDecoration: 'none' }}>
                         <Img src={pokemon.sprites.front_default}></Img>
                         <Label>{pokemon.name}</Label>
                     </StyledLink>
-                    
                 </Card>
             )
         })
@@ -30,9 +28,9 @@ function PokemonComponentList() {
             renderList = filteredPokemons.map((pokemon) => {
                 return (
                     <Card key={pokemon.id}>
-                        <Link to={`/${pokemon.id}`}>
+                        <StyledLink to={`/${pokemon.name}`} style={{ textDecoration: 'none' }}>
                             <Img src={pokemon.sprites.front_default}></Img>
-                        </Link>
+                        </StyledLink>
                         <Label>{pokemon.name}</Label>
                     </Card>
                 )
