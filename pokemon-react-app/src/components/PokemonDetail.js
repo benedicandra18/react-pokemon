@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation, useParams } from 'react-router'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { notFoundPokemon, setPokemon } from '../redux/actions/pokemonActions'
+import { notFoundPokemon, setPokemon, setPokemonLoading } from '../redux/actions/pokemonActions'
 import { Img } from './../styles/Img.style'
 import { Container } from '../styles/Container.style'
 import { Type } from '../styles/Type.style'
@@ -17,6 +17,7 @@ const PokemonDetail = () => {
     const pokemons = useSelector(state => state.pokemons.pokemons)
 
     const fetchPokemonData = async () => {
+        dispatch(setPokemonLoading())
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
             .catch(err => console.log(err))
         
@@ -31,9 +32,7 @@ const PokemonDetail = () => {
     }
 
     useEffect(() => {
-        console.log("props:", pokemons)
-        if (pokemonName && pokemonName !== "")
-            fetchPokemonData()
+        fetchPokemonData()
     }, [pokemonName, dispatch])
 
     const colors = ['#ed835c', '#44a8eb', '#ae44cf', '#4bc94d', '#989ced']
@@ -43,7 +42,6 @@ const PokemonDetail = () => {
          {!notFound ? 
             <div>
                 <Label>{pokemon.name}</Label>
-                {/* {/* <Container>
                         <Img src={pokemon.sprites.back_default}></Img>
                         <Img src={pokemon.sprites.back_female}></Img>
                         <Img src={pokemon.sprites.back_shiny}></Img>
@@ -57,7 +55,6 @@ const PokemonDetail = () => {
                 return <Type key={type.name} backgroundColor={colors[Math.floor(Math.random() * type.length)]}>{type.name}</Type> 
             })}  */}
 
-                 {/* </Container>   */}
                  </div>             
             :
             <NotFoundComponent /> 
