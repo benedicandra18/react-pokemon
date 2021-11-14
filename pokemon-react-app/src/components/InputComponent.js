@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { Input } from '../styles/Input.style'
 import { useSelector, useDispatch } from 'react-redux'
 import { filterPokemons } from './../redux/actions/pokemonActions'

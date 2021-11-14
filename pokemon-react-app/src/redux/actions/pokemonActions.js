@@ -1,4 +1,4 @@
-import { SET_POKEMONS, SET_POKEMON, FILTER_POKEMONS, POKEMONS_LOADING, POKEMON_LOADING, POKEMON_NOT_FOUND } from '../types'
+import { SET_POKEMONS, SET_POKEMON, FILTER_POKEMONS, POKEMONS_LOADING, POKEMON_NOT_FOUND } from '../types'
 
 export const setPokemons = (pokemons) => {
     return {
@@ -33,8 +33,3 @@ export const setPokemonsLoading = () => {
     }
 }
 
-export const setPokemonLoading = () => {
-    return {
-        type: POKEMON_LOADING
-    }
-}

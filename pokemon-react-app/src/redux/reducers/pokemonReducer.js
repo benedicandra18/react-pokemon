@@ -1,8 +1,7 @@
-import { SET_POKEMON, POKEMON_NOT_FOUND, POKEMON_LOADING } from "../types";
+import { SET_POKEMON, POKEMON_NOT_FOUND } from "../types";
 
 const initialState = {
   pokemon: {},
-  loading: false,
   notFound: false
 };
 
@@ -20,11 +19,6 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         notFound: true
-      }
-      case POKEMON_LOADING:
-      return {
-        ...state,
-        loading: false
       }
     default:
       return state;

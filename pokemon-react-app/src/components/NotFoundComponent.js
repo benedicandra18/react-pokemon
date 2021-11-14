@@ -1,15 +1,16 @@
 import React from 'react'
-import { Card } from '../styles/Card.style'
+import { Ball } from '../styles/Ball.style'
+import { Container } from '../styles/Container.style'
 import { Label } from '../styles/Label.style'
-import { StyledLink } from '../styles/Link.style'
 
 const NotFoundComponent = () =>{
     return (
         <div>
-            <Card>
+            <Container>
+            <Ball>
                 <Label>404 NOT FOUND</Label>
-            </Card>
-            
+            </Ball>  
+            </Container>
         </div>
     )
 }

@@ -37,13 +37,10 @@ function PokemonList() {
 
     return (
         <div>
-
             <Container>
                 <InputComponent />
                 {loading ?
-                    <Container>
-                        <Label>Loading ... </Label>
-                    </Container> :
+                        <Label color="white">Loading ... </Label> :
                     <Container>
                         <PokemonComponentList />
                     </Container>}
