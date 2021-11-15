@@ -25,8 +25,8 @@ const PokemonDetail = () => {
     }
 
     useEffect(() => {
-        fetchPokemonData().then(() => setLoading(false))
-    }, [isLoading, pokemonName])
+        fetchPokemonData().then(()=>setLoading(false))
+    }, [pokemonName])
 
     const colors = ['#ed832c', '#44a8eb', '#ae44cf', '#4bc94d', '#989ced', '#72f037', '#f037a6']
 
