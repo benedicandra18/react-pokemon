@@ -25,10 +25,11 @@ const PokemonDetail = () => {
     }
 
     useEffect(() => {
-        fetchPokemonData().then(()=>setLoading(false))
+        fetchPokemonData().then(() => setLoading(false))
     }, [pokemonName])
 
     const colors = ['#ed832c', '#44a8eb', '#ae44cf', '#4bc94d', '#989ced', '#72f037', '#f037a6']
+    const { name, sprites, types, stats } = pokemon
 
     return (
         <>
@@ -37,20 +38,20 @@ const PokemonDetail = () => {
                     <div>
                         <Container>
                             <Ball flex="0 0 60%" padding="6%" align="stretch">
-                                <Label fontSize="2.3vw">{pokemon.name}</Label>
+                                <Label fontSize="2.3vw">{name}</Label>
                                 <Container>
-                                    {pokemon.sprites.front_default && <Img src={pokemon.sprites.front_default} width="18%" ></Img>}
-                                    {pokemon.sprites.back_default && <Img src={pokemon.sprites.back_default} width="18%" ></Img>}
-                                    {pokemon.sprites.front_shiny && <Img src={pokemon.sprites.front_shiny} width="18%" ></Img>}
-                                    {pokemon.sprites.back_shiny && <Img src={pokemon.sprites.back_shiny} width="18%" ></Img>}
-                                    {pokemon.sprites.front_female && <Img src={pokemon.sprites.front_female} width="18%" ></Img>}
-                                    {pokemon.sprites.back_female && <Img src={pokemon.sprites.back_female} width="18%" ></Img>}
-                                    {pokemon.sprites.front_shiny_female && <Img src={pokemon.sprites.front_shiny_female} width="18%" ></Img>}
-                                    {pokemon.sprites.back_shiny_female && <Img src={pokemon.sprites.back_shiny_female} width="18%" ></Img>}
+                                    {sprites.front_default && <Img src={sprites.front_default} width="18%" ></Img>}
+                                    {sprites.back_default && <Img src={sprites.back_default} width="18%" ></Img>}
+                                    {sprites.front_shiny && <Img src={sprites.front_shiny} width="18%" ></Img>}
+                                    {sprites.back_shiny && <Img src={sprites.back_shiny} width="18%" ></Img>}
+                                    {sprites.front_female && <Img src={sprites.front_female} width="18%" ></Img>}
+                                    {sprites.back_female && <Img src={sprites.back_female} width="18%" ></Img>}
+                                    {sprites.front_shiny_female && <Img src={sprites.front_shiny_female} width="18%" ></Img>}
+                                    {sprites.back_shiny_female && <Img src={sprites.back_shiny_female} width="18%" ></Img>}
 
                                 </Container>
                                 <Container >
-                                    {pokemon.types.map(({ type }) => {
+                                    {types.map(({ type }) => {
                                         return <Type
                                             key={type.name}
                                             backgroundColor={colors[Math.floor(Math.random() * 5)]}>{type.name}</Type>
@@ -59,7 +60,7 @@ const PokemonDetail = () => {
 
 
                                 <List>
-                                    {pokemon.stats.map(stat =>
+                                    {stats.map(stat =>
                                         <Container2 key={stat.stat.name}>
                                             <LabelItem>{stat.stat.name}</LabelItem>
                                             <Item backgroundColor={colors[Math.floor(Math.random() * 5)]} value={stat.base_stat}>{stat.base_stat}</Item>
@@ -69,7 +70,6 @@ const PokemonDetail = () => {
 
                             </Ball>
                         </Container>
-
                     </div>
                     :
                     <NotFoundComponent />
