@@ -2,12 +2,8 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 import { setPokemons, setPokemonsLoading } from '../redux/actions/pokemonActions'
-import { Container } from '../styles/Container.style'
+import { Container, Label, Ball, StyledLink, Img } from './PokemonList.style'
 import InputComponent from './InputComponent'
-import { Label } from '../styles/Label.style'
-import { Ball } from '../styles/Ball.style'
-import { StyledLink } from '../styles/Link.style'
-import { Img } from '../styles/Img.style'
 
 function PokemonList() {
     const { pokemons, filteredPokemons, filterStatus, loading } = useSelector(state => state.pokemons)

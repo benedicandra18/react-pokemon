@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Input } from '../styles/Input.style'
+import { Input } from './PokemonList.style'
 import { useSelector, useDispatch } from 'react-redux'
 import { filterPokemons } from './../redux/actions/pokemonActions'
 

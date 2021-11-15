@@ -3,13 +3,10 @@ import { useParams } from 'react-router'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { notFoundPokemon, setPokemon } from '../redux/actions/pokemonActions'
-import { Img } from './../styles/Img.style'
-import { Container } from '../styles/Container.style'
-import { Type } from '../styles/Type.style'
-import { Label } from '../styles/Label.style'
-import { Ball } from '../styles/Ball.style'
+import { Img, Container, Label, Ball } from './PokemonList.style'
+import { Type, StatRow, List, Item, LabelItem } from './PokemonDetail.style'
 import NotFoundComponent from './NotFoundComponent'
-import { StatRow, List, Item, LabelItem } from '../styles/StatsList.style'
+
 
 const PokemonDetail = () => {
 
