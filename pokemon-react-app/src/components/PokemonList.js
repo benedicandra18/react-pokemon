@@ -2,13 +2,15 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 import { setPokemons, setPokemonsLoading } from '../redux/actions/pokemonActions'
-import PokemonComponentList from './PokemonComponentList'
 import { Container } from '../styles/Container.style'
 import InputComponent from './InputComponent'
 import { Label } from '../styles/Label.style'
+import { Ball } from '../styles/Ball.style'
+import { StyledLink } from '../styles/Link.style'
+import { Img } from '../styles/Img.style'
 
 function PokemonList() {
-    const { pokemons, loading } = useSelector(state => state.pokemons)
+    const { pokemons, filteredPokemons, filterStatus, loading } = useSelector(state => state.pokemons)
     const dispatch = useDispatch();
 
     const fetchPokemons = async () => {
@@ -30,9 +32,9 @@ function PokemonList() {
     }
 
     useEffect(() => {
-        if(pokemons.length===0){
+        if (pokemons.length === 0) {
             fetchPokemons()
-        } 
+        }
     }, [])
 
     return (
@@ -40,9 +42,35 @@ function PokemonList() {
             <Container>
                 <InputComponent />
                 {loading ?
-                        <Label color="white">Loading ... </Label> :
+                    <Label color="white">Loading ... </Label> :
                     <Container>
-                        <PokemonComponentList />
+                        {pokemons.length !== 0 && filteredPokemons.length === 0 && filterStatus === false && (
+                            pokemons.map((pokemon) => {
+                                return (
+                                    <Ball key={pokemon.id} flex="0 0 20%" height="30vh" align="center">
+                                        <StyledLink to={`/${pokemon.name}`} style={{ textDecoration: 'none' }}>
+                                            <Img src={pokemon.sprites.front_default} width="90%"></Img>
+                                            <Label fontSize="1.3vw">{pokemon.name}</Label>
+                                        </StyledLink>
+                                    </Ball>
+                                )
+                            }))}
+
+                        {filteredPokemons.length !== 0 && (
+                            filteredPokemons.map((pokemon) => {
+                                return (
+                                    <Ball key={pokemon.id} flex="0 0 20%" height="30vh" align="center">
+                                        <StyledLink to={`/${pokemon.name}`} style={{ textDecoration: 'none' }}>
+                                            <Img src={pokemon.sprites.front_default} width="90%"></Img>
+                                            <Label fontSize="1.3vw">{pokemon.name}</Label>
+                                        </StyledLink>
+                                    </Ball>
+                                )
+                            })
+                        )}
+                        {filteredPokemons.length === 0 && filterStatus === true && (
+                            <Label>No pokemons found ...</Label>
+                        )}
                     </Container>}
 
             </Container>

@@ -7,7 +7,7 @@ import { Img } from './../styles/Img.style'
 import { Container } from '../styles/Container.style'
 import { Type } from '../styles/Type.style'
 import { Label } from '../styles/Label.style'
-import { Card } from '../styles/Card.style'
+import { Ball } from '../styles/Ball.style'
 import NotFoundComponent from './NotFoundComponent'
 import { Container2, List, Item, LabelItem } from '../styles/StatsList.style'
 
@@ -36,38 +36,38 @@ const PokemonDetail = () => {
                 (!notFound ?
                     <div>
                         <Container>
-                        <Card>
-                        <Label fontSize="2.3vw">{pokemon.name}</Label>
-                        <Container>
-                            {pokemon.sprites.front_default && <Img src={pokemon.sprites.front_default} width="18%" ></Img>}
-                            {pokemon.sprites.back_default && <Img src={pokemon.sprites.back_default} width="18%" ></Img>}
-                            {pokemon.sprites.front_shiny && <Img src={pokemon.sprites.front_shiny} width="18%" ></Img>}
-                            {pokemon.sprites.back_shiny && <Img src={pokemon.sprites.back_shiny} width="18%" ></Img>}
-                            {pokemon.sprites.front_female && <Img src={pokemon.sprites.front_female} width="18%" ></Img>}
-                            {pokemon.sprites.back_female && <Img src={pokemon.sprites.back_female} width="18%" ></Img>}
-                            {pokemon.sprites.front_shiny_female && <Img src={pokemon.sprites.front_shiny_female} width="18%" ></Img>}
-                            {pokemon.sprites.back_shiny_female && <Img src={pokemon.sprites.back_shiny_female} width="18%" ></Img>}
+                            <Ball flex="0 0 60%" padding="6%" align="stretch">
+                                <Label fontSize="2.3vw">{pokemon.name}</Label>
+                                <Container>
+                                    {pokemon.sprites.front_default && <Img src={pokemon.sprites.front_default} width="18%" ></Img>}
+                                    {pokemon.sprites.back_default && <Img src={pokemon.sprites.back_default} width="18%" ></Img>}
+                                    {pokemon.sprites.front_shiny && <Img src={pokemon.sprites.front_shiny} width="18%" ></Img>}
+                                    {pokemon.sprites.back_shiny && <Img src={pokemon.sprites.back_shiny} width="18%" ></Img>}
+                                    {pokemon.sprites.front_female && <Img src={pokemon.sprites.front_female} width="18%" ></Img>}
+                                    {pokemon.sprites.back_female && <Img src={pokemon.sprites.back_female} width="18%" ></Img>}
+                                    {pokemon.sprites.front_shiny_female && <Img src={pokemon.sprites.front_shiny_female} width="18%" ></Img>}
+                                    {pokemon.sprites.back_shiny_female && <Img src={pokemon.sprites.back_shiny_female} width="18%" ></Img>}
 
-                        </Container>
-                        <Container >
-                            {pokemon.types.map(({ type }) => {
-                                return <Type
-                                    key={type.name}
-                                    backgroundColor={colors[Math.floor(Math.random() * 5)]}>{type.name}</Type>
-                            })}
-                        </Container>
-                        
-                        
-                        <List>
-                        {pokemon.stats.map(stat =>
-                            <Container2 key={stat.stat.name}>
-                            <LabelItem>{stat.stat.name}</LabelItem>
-                            <Item backgroundColor={colors[Math.floor(Math.random() * 5)]} value={stat.base_stat}>{stat.base_stat}</Item>
-                            </Container2>
-                        )}
-                        </List>    
+                                </Container>
+                                <Container >
+                                    {pokemon.types.map(({ type }) => {
+                                        return <Type
+                                            key={type.name}
+                                            backgroundColor={colors[Math.floor(Math.random() * 5)]}>{type.name}</Type>
+                                    })}
+                                </Container>
 
-                        </Card>
+
+                                <List>
+                                    {pokemon.stats.map(stat =>
+                                        <Container2 key={stat.stat.name}>
+                                            <LabelItem>{stat.stat.name}</LabelItem>
+                                            <Item backgroundColor={colors[Math.floor(Math.random() * 5)]} value={stat.base_stat}>{stat.base_stat}</Item>
+                                        </Container2>
+                                    )}
+                                </List>
+
+                            </Ball>
                         </Container>
 
                     </div>
