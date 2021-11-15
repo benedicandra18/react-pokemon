@@ -16,9 +16,13 @@ const PokemonDetail = () => {
     const { pokemon, notFound } = useSelector(state => state.pokemon)
 
     const fetchPokemonData = async () => {
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-            .then((res) => dispatch(setPokemon(res.data)))
-            .catch(() => dispatch(notFoundPokemon()))
+        try{
+            const response=await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+            return dispatch(setPokemon(response))
+        } 
+        catch {
+            return dispatch(notFoundPokemon())
+        }
     }
 
     useEffect(() => {
