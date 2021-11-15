@@ -11,7 +11,7 @@ export const List= styled.ul`
   font-family: 'Segoe Print';
   font-weight: bold;
 `
-export const Container2 = styled.div`
+export const StatRow = styled.div`
   display: flex;
   flex-direction: row;
   margin: 5px;

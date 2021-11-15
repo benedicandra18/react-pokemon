@@ -9,7 +9,7 @@ import { Type } from '../styles/Type.style'
 import { Label } from '../styles/Label.style'
 import { Ball } from '../styles/Ball.style'
 import NotFoundComponent from './NotFoundComponent'
-import { Container2, List, Item, LabelItem } from '../styles/StatsList.style'
+import { StatRow, List, Item, LabelItem } from '../styles/StatsList.style'
 
 const PokemonDetail = () => {
 
@@ -61,10 +61,10 @@ const PokemonDetail = () => {
 
                                 <List>
                                     {stats.map(stat =>
-                                        <Container2 key={stat.stat.name}>
+                                        <StatRow key={stat.stat.name}>
                                             <LabelItem>{stat.stat.name}</LabelItem>
                                             <Item backgroundColor={colors[Math.floor(Math.random() * 5)]} value={stat.base_stat}>{stat.base_stat}</Item>
-                                        </Container2>
+                                        </StatRow>
                                     )}
                                 </List>
 
