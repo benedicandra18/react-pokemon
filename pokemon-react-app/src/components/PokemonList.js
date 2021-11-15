@@ -48,7 +48,7 @@ function PokemonList() {
                             pokemons.map((pokemon) => {
                                 return (
                                     <Ball key={pokemon.id} flex="0 0 20%" height="30vh" align="center">
-                                        <StyledLink to={`/${pokemon.name}`} style={{ textDecoration: 'none' }}>
+                                        <StyledLink to={`/${pokemon.name}`} >
                                             <Img src={pokemon.sprites.front_default} width="90%"></Img>
                                             <Label fontSize="1.3vw">{pokemon.name}</Label>
                                         </StyledLink>
@@ -60,7 +60,7 @@ function PokemonList() {
                             filteredPokemons.map((pokemon) => {
                                 return (
                                     <Ball key={pokemon.id} flex="0 0 20%" height="30vh" align="center">
-                                        <StyledLink to={`/${pokemon.name}`} style={{ textDecoration: 'none' }}>
+                                        <StyledLink to={`/${pokemon.name}`} >
                                             <Img src={pokemon.sprites.front_default} width="90%"></Img>
                                             <Label fontSize="1.3vw">{pokemon.name}</Label>
                                         </StyledLink>
