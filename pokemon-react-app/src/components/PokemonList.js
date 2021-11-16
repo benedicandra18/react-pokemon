@@ -13,16 +13,12 @@ function PokemonList() {
 
         dispatch(setPokemonsLoading())
 
-        const gen1Species = await axios.get('https://pokeapi.co/api/v2/generation/1')
-            .then(res => res.data.pokemon_species.map(specie => specie.name))
-
-        const allPokemons = await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=1118')
-            .then(res => res.data.results.map(pokemon =>
-                axios.get(pokemon.url)
-                    .then(({ data }) => (data))))
-
-        const gen1Pokemons = await axios.all(allPokemons)
-            .then(res => res.filter(res => gen1Species.includes(res.species.name)))
+        const gen1PokemonsPremises = await axios.get('https://pokeapi.co/api/v2/generation/1')
+            .then(res => res.data.pokemon_species
+                .map(specie =>axios.get(specie.url.slice(0,33) + specie.url.slice(41,specie.url.length))
+                .then(({ data }) => (data)) ))
+            
+        const gen1Pokemons = await axios.all(gen1PokemonsPremises)
 
         dispatch(setPokemons(gen1Pokemons))
     }
