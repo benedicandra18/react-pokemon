@@ -15,7 +15,7 @@ function PokemonList() {
 
         const gen1PokemonsPremises = await axios.get('https://pokeapi.co/api/v2/generation/1')
             .then(res => res.data.pokemon_species
-                .map(specie =>axios.get(specie.url.slice(0,33) + specie.url.slice(41,specie.url.length))
+                .map(({url}) =>axios.get(url.slice(0,33) + url.slice(41,url.length))
                 .then(({ data }) => (data)) ))
             
         const gen1Pokemons = await axios.all(gen1PokemonsPremises)

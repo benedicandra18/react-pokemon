@@ -18,7 +18,7 @@ const PokemonDetail = () => {
     const fetchPokemonData = async () => {
         try{
             const response=await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-            return dispatch(setPokemon(response))
+            return dispatch(setPokemon(response.data))
         } 
         catch {
             return dispatch(notFoundPokemon())
