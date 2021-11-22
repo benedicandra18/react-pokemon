@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 import { setPokemons, setPokemonsLoading } from '../redux/actions/pokemonActions'
-import { Container, Container2, Label, Ball, StyledLink, Img } from './PokemonList.style'
+import { Container, Label, Ball, StyledLink, Img } from './PokemonList.style'
 import InputComponent from './InputComponent'
 
 function PokemonList() {
@@ -49,7 +49,7 @@ function PokemonList() {
         if (pokemons.length === 0) {
             fetchPokemons()
         }
-    }, [])
+    }, [pokemons.length])
 
     return (
         <div>
