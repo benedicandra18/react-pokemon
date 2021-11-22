@@ -2,47 +2,71 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 import { setPokemons, setPokemonsLoading } from '../redux/actions/pokemonActions'
-import PokemonComponentList from './PokemonComponentList'
-import { Container } from '../styles/Container.style'
+import { Container, Label, Ball, StyledLink, Img } from './PokemonList.style'
 import InputComponent from './InputComponent'
-import { Label } from '../styles/Label.style'
 
 function PokemonList() {
-    const { pokemons, loading } = useSelector(state => state.pokemons)
+    const { pokemons, filteredPokemons, filterStatus, loading } = useSelector(state => state.pokemons)
     const dispatch = useDispatch();
 
     const fetchPokemons = async () => {
+        // dispatch(setPokemonsLoading())
+        // const gen1PokemonsPremises = await axios.get('https://pokeapi.co/api/v2/generation/1')
+        //     .then(res => res.data.pokemon_species
+        //         .map(({url}) =>axios.get(url.slice(0,33) + url.slice(41,url.length))
+        //         .then(({ data }) => (data)) ))
 
-        dispatch(setPokemonsLoading())
+        // const gen1Pokemons = await axios.all(gen1PokemonsPremises)
+        // dispatch(setPokemons(gen1Pokemons))
 
-        const gen1Species = await axios.get('https://pokeapi.co/api/v2/generation/1')
-            .then(res => res.data.pokemon_species.map(specie => specie.name))
+        try {
+            dispatch(setPokemonsLoading())
 
-        const allPokemons = await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=1118')
-            .then(res => res.data.results.map(pokemon =>
-                axios.get(pokemon.url)
-                    .then(({ data }) => (data))))
+            const { data } = await axios.get('https://pokeapi.co/api/v2/generation/1')
+            const { pokemon_species } = data
+            const premises = pokemon_species.map(({ url }) => axios.get(url.slice(0, 33) + url.slice(41, url.length)))
+            const gen1PokemonsResponses = await axios.all(premises)
+            const gen1Pokemons = gen1PokemonsResponses.map(res => res.data)
 
-        const gen1Pokemons = await axios.all(allPokemons)
-            .then(res => res.filter(res => gen1Species.includes(res.species.name)))
+            dispatch(setPokemons(gen1Pokemons))
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
-        dispatch(setPokemons(gen1Pokemons))
+    const displayBall = (pokemon) =>{
+        return (
+            <Ball key={pokemon.id} flex="0 0 20%" height="30vh" align="center">
+                <StyledLink to={`/${pokemon.name}`} >
+                    <Img src={pokemon.sprites.front_default} width="90%"></Img>
+                    <Label fontSize="1.3vw">{pokemon.name}</Label>
+                </StyledLink>
+            </Ball>
+        )
     }
 
     useEffect(() => {
-        if(pokemons.length===0){
+        if (pokemons.length === 0) {
             fetchPokemons()
-        } 
-    }, [])
+        }
+    }, [pokemons.length])
 
     return (
         <div>
-            <Container>
+            <Container dir="column">
                 <InputComponent />
                 {loading ?
-                        <Label color="white">Loading ... </Label> :
+                    <Label color="white">Loading ... </Label> :
                     <Container>
-                        <PokemonComponentList />
+                        {pokemons.length !== 0 && filteredPokemons.length === 0 && filterStatus === false && (
+                            pokemons.map((pokemon) => displayBall(pokemon)))}
+
+                        {filteredPokemons.length !== 0 && (
+                            filteredPokemons.map((pokemon) => displayBall(pokemon))
+                        )}
+                        {filteredPokemons.length === 0 && filterStatus === true && (
+                            <Label>No pokemons found ...</Label>
+                        )}
                     </Container>}
 
             </Container>
