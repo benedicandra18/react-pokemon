@@ -10,17 +10,39 @@ function PokemonList() {
     const dispatch = useDispatch();
 
     const fetchPokemons = async () => {
+        // dispatch(setPokemonsLoading())
+        // const gen1PokemonsPremises = await axios.get('https://pokeapi.co/api/v2/generation/1')
+        //     .then(res => res.data.pokemon_species
+        //         .map(({url}) =>axios.get(url.slice(0,33) + url.slice(41,url.length))
+        //         .then(({ data }) => (data)) ))
 
-        dispatch(setPokemonsLoading())
+        // const gen1Pokemons = await axios.all(gen1PokemonsPremises)
+        // dispatch(setPokemons(gen1Pokemons))
 
-        const gen1PokemonsPremises = await axios.get('https://pokeapi.co/api/v2/generation/1')
-            .then(res => res.data.pokemon_species
-                .map(({url}) =>axios.get(url.slice(0,33) + url.slice(41,url.length))
-                .then(({ data }) => (data)) ))
-            
-        const gen1Pokemons = await axios.all(gen1PokemonsPremises)
+        try {
+            dispatch(setPokemonsLoading())
 
-        dispatch(setPokemons(gen1Pokemons))
+            const { data } = await axios.get('https://pokeapi.co/api/v2/generation/1')
+            const { pokemon_species } = data
+            const premises = pokemon_species.map(({ url }) => axios.get(url.slice(0, 33) + url.slice(41, url.length)))
+            const gen1PokemonsResponses = await axios.all(premises)
+            const gen1Pokemons = gen1PokemonsResponses.map(res => res.data)
+
+            dispatch(setPokemons(gen1Pokemons))
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const displayBall = (pokemon) =>{
+        return (
+            <Ball key={pokemon.id} flex="0 0 20%" height="30vh" align="center">
+                <StyledLink to={`/${pokemon.name}`} >
+                    <Img src={pokemon.sprites.front_default} width="90%"></Img>
+                    <Label fontSize="1.3vw">{pokemon.name}</Label>
+                </StyledLink>
+            </Ball>
+        )
     }
 
     useEffect(() => {
@@ -37,28 +59,10 @@ function PokemonList() {
                     <Label color="white">Loading ... </Label> :
                     <Container>
                         {pokemons.length !== 0 && filteredPokemons.length === 0 && filterStatus === false && (
-                            pokemons.map((pokemon) => {
-                                return (
-                                    <Ball key={pokemon.id} flex="0 0 20%" height="30vh" align="center">
-                                        <StyledLink to={`/${pokemon.name}`} >
-                                            <Img src={pokemon.sprites.front_default} width="90%"></Img>
-                                            <Label fontSize="1.3vw">{pokemon.name}</Label>
-                                        </StyledLink>
-                                    </Ball>
-                                )
-                            }))}
+                            pokemons.map((pokemon) => displayBall(pokemon)))}
 
                         {filteredPokemons.length !== 0 && (
-                            filteredPokemons.map((pokemon) => {
-                                return (
-                                    <Ball key={pokemon.id} flex="0 0 20%" height="30vh" align="center">
-                                        <StyledLink to={`/${pokemon.name}`} >
-                                            <Img src={pokemon.sprites.front_default} width="90%"></Img>
-                                            <Label fontSize="1.3vw">{pokemon.name}</Label>
-                                        </StyledLink>
-                                    </Ball>
-                                )
-                            })
+                            filteredPokemons.map((pokemon) => displayBall(pokemon))
                         )}
                         {filteredPokemons.length === 0 && filterStatus === true && (
                             <Label>No pokemons found ...</Label>
